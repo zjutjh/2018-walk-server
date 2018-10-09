@@ -21,3 +21,25 @@ function RJM($code, $msg = '', $data = null) {
     ];
     return response()->json($json);
 }
+
+
+/**
+ * 用身份证获取性别
+ * @param string $iid
+ * @return string
+ */
+function iidGetSex(string $iid) {
+    $sex = (int) substr($iid, 16, 1);
+    echo $sex;
+    return $sex % 2 == 0 ? '女' : '男';
+}
+
+
+/**
+ * 用身份证获取生日
+ * @param string $iid
+ * @return bool|string
+ */
+function iidGetBirthday(string $iid) {
+    return substr($iid, 6, 8);
+}

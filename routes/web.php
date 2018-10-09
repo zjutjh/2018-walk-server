@@ -14,3 +14,13 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/oauth', 'Auth\LoginController@oauth');
+Route::post('/wx/autologin', 'Auth\LoginController@wxLogin');
+
+Route::group(['middleware' => ['auth.token']], function() {
+
+});
+
+Route::post('/test', 'Auth\LoginController@wxLogin');
+
