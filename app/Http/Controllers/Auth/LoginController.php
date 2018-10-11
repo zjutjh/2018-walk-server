@@ -28,9 +28,11 @@ class LoginController extends Controller
      * @param Request $request
      */
     public function wxLogin(Request $request) {
-//        $code = $request->get('code');
+        $code = $request->get('code');
 //        $openid = $this->getWxOpenid($code);
-        $openid = $request->get('openid');
+//        $openid = $request->get('code');
+        $openid = 'oIRN_t50catBXGiM6I-ZbXofVGZ8';
+//        $openid = 'test';
 
         if (!$openid) {
             return RJM(-1, '用户认证失败');
@@ -54,6 +56,20 @@ class LoginController extends Controller
         return RJM(1, '认证成功', ['user' => $user, 'token' => $token]);
 
 
+    }
+
+    public function getUserInfo() {
+        if (!$user = Auth::user()) {
+            return RJM(-1, '登陆过期');
+        }
+
+
+        if (!$token = Auth::login($user)) {
+            return RJM(-1, '生成token失败');
+        }
+
+
+        return RJM(1, '认证成功', ['user' => $user, 'token' => $token]);
     }
 
 

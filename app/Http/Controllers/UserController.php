@@ -37,7 +37,7 @@ class UserController extends Controller
             return RJM(-1, $error ?  $error: '用户或密码错误');
         }
 
-        $user = Autu::user();
+        $user = Auth::user();
         $user->sid = $sid;
         $user->identity = $identity;
         $uState = $user->state()->first();
@@ -54,7 +54,7 @@ class UserController extends Controller
     public function verifyOther(Request $request) {
         $identity = $request->get('identity');
 
-        $user = Autu::user();
+        $user = Auth::user();
         $user->identity = $identity;
         $uState = $user->state()->first();
         $uState->state = 1;

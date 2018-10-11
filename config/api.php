@@ -9,6 +9,7 @@
 return [
     'jh' => [
         'center' => 'http://user.jh.zjut.edu.cn/api.php',
-        'template' => 'http://server.wejh.imcr.me/api/notification/walk'
+        'template' => 'https://server.wejh.imcr.me/api/notification/walk',
+        'oauth' => 'https://craim.net/oauth/index.php?url='
     ]
 ];

@@ -2,13 +2,13 @@
 
 namespace App;
 
+use App\Jobs\SendTemplate;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use Notifiable;
 
 
 
@@ -27,7 +27,7 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     protected $fillable = [
-      'name', 'id_card', 'email', 'sex', 'qq', 'wx_id', 'height', 'birthday'
+      'name', 'id_card', 'email', 'sex', 'qq', 'wx_id', 'height', 'birthday', 'phone'
     ];
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
@@ -53,7 +53,7 @@ class User extends Authenticatable implements JWTSubject
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function group() {
-        return $this->belongsTo('App\YxGroup');
+        return $this->belongsTo('App\YxGroup', 'yx_group_id');
     }
 
 
@@ -67,10 +67,14 @@ class User extends Authenticatable implements JWTSubject
 
     /**
      * 模板消息通知
-     * @param $instance
      */
-    public function notify($instance) {
-
+    public function notify($data) {
+        $config = [
+            'openid' => $this->openid,
+            'url'    => '',
+            'data'   => $data
+        ];
+        dispatch(new SendTemplate($config));
     }
 
     /**
@@ -96,10 +100,28 @@ class User extends Authenticatable implements JWTSubject
     public function leaveGroup() {
         $this->yx_group_id = null;
         $this->state()->update(['state' => 1]);
-        return $this;
+        return parent::save();
     }
 
 
+    /**
+     * 设置身份证信息
+     * @param $value
+     */
+    public function setIdCardAttribute($value)
+    {
+        $this->attributes['sex'] = iidGetSex($value);
+        $this->attributes['birthday'] = iidGetBirthday($value);
+        $this->attributes['id_card'] = md5(strtoupper($value));
+
+    }
+
+
+    /**
+     * 加入队伍
+     * @param $groupId
+     * @return bool
+     */
     public function addGroup($groupId) {
         $this->yx_group_id = $groupId;
         $this->state()->update(['state' => 4]);

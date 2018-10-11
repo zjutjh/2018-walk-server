@@ -9,6 +9,9 @@
 namespace App\Services;
 
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+
 class UserCenterService
 {
     /**
@@ -21,17 +24,25 @@ class UserCenterService
      *  另外列表数据即使字段相同也要重新转换一遍，一般转换为中文以便理解
      */
     public $error = '';
-    public function setError($message) {
+
+    public function setError($message)
+    {
         $this->error = $message;
         return false;
     }
-    public function getError() {
+
+    public function getError()
+    {
         return $this->error;
     }
-    public function resetError() {
+
+    public function resetError()
+    {
         $this->error = '';
     }
-    public function checkJhPassport($user_name, $password) {
+
+    public function checkJhPassport($user_name, $password)
+    {
         if (!$user_name OR !$password) {
             return $this->setError('用户名或密码为空');
         }
@@ -42,16 +53,18 @@ class UserCenterService
             'password' => ($password),
         ];
         $client = new Client();
-        //if(!$content = http_get($url, $data))
-        if (!$content = $client->get(config('api.jh.center') . "?" . http_build_query($data)))
+
+        if (!$content = $client->get(config('api.jh.center') . "?" . http_build_query($data), ['http_errors' => false]))
             return $this->setError('用户中心服务器错误');
-        if(!$value = json_decode((string)$content->getBody(), true)) {
+        if (!$value = json_decode((string)$content->getBody(), true)) {
             return $this->setError('用户中心服务器错误');
         }
-        if(isset($value['state']) && $value['state'] == 'success') {
+        if (isset($value['state']) && $value['state'] == 'success') {
             return true;
         } else {
-            return $this->setError('用户名或密码错误');
+            return $this->setError('用户名或密码');
         }
+
+
     }
 }

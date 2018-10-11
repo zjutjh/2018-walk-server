@@ -17,10 +17,43 @@ Route::get('/', function () {
 
 Route::get('/oauth', 'Auth\LoginController@oauth');
 Route::post('/wx/autologin', 'Auth\LoginController@wxLogin');
+Route::get('/wx/getUserInfo', 'Auth\LoginController@getUserInfo');
 
-Route::group(['middleware' => ['auth.token']], function() {
+
+
+Route::get('/index/info', 'IndexController@indexInfo');
+Route::get('/info/count', 'IndexController@count');
+Route::group(['middleware' => ['auth.token', 'check.finish']], function() {
+    Route::post('/login/stu', 'UserController@verifyStu');
+    Route::post('/login/other', 'UserController@verifyOther');
+    Route::post('/user/detail', 'UserController@detailInfo');
+
+    Route::get('/team/list', 'GroupController@groupLists');
+    Route::get('/team/apply/list', 'GroupController@getApplyList');
+    Route::get('/team/apply/count', 'GroupController@getApplyCount');
+    Route::post('/team/create', 'GroupController@createGroup');
+    Route::post('/team/update', 'GroupController@updateGroupInfo');
+    Route::get('/team/break', 'GroupController@breakGroup');
+    Route::post('/team/apply', 'GroupController@doApply');
+    Route::get('/team/leave', 'GroupController@leaveGroup');
+    Route::get('/team/lock', 'GroupController@lockGroup');
+    Route::get('/team/unlock', 'GroupController@unlockGroup');
+    Route::post('/team/agree', 'GroupController@agreeMember');
+    Route::post('/team/refuse', 'GroupController@refuseMember');
+    Route::post('/team/search', 'GroupController@searchTeam');
+    Route::post('/team/delete', 'GroupController@deleteMember');
+    Route::get('/team/info', 'GroupController@getGroupInfo');
+    Route::get('/team/members', 'GroupController@getGroupMembers');
+    Route::get('/apply/team', 'GroupController@getApplyTeam');
+    Route::get('/apply/delete', 'GroupController@deleteApply');
+
+
+
+
+
 
 });
+Route::get('/get/end', 'IndexController@verifyApplyEnd');
 
 Route::post('/test', 'Auth\LoginController@wxLogin');
 

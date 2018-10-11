@@ -8,6 +8,9 @@ class YxGroup extends Model
 {
 
 
+    protected $fillable = [
+        'name', 'num', 'start_campus', 'description', 'select_route', 'captain_id'
+    ];
 
     /**
      *  获取所有组员
@@ -29,11 +32,14 @@ class YxGroup extends Model
      * 获取队员
      */
     public function getMembersAttribute() {
-        return $this->members()->get();
+        return $this->members()->count();
     }
 
 
 
+    /*
+     * 获取队伍数量
+     */
     static public function getTeamCount() {
         return YxGroup::count();
     }
@@ -62,7 +68,15 @@ class YxGroup extends Model
      * 通知队长
      */
     public function notifyCaptain() {
-
+        $data = [
+            'first' => "有人申请加入你的队伍",
+            'keyword1' => '队伍申请',
+            'keyword2' => '正在申请',
+            'keyword3' => date('Y-m-d H:i:s', time()),
+            'remark'   => '点击详情，进入我的队伍查看申请信息'
+        ];
+        $user = User::where('id', $this->captain_id)->first();
+        $user->notify($data);
     }
 
 
