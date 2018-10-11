@@ -18,7 +18,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $hidden = [
-        'openid', 'sex', 'id_card', 'height', 'birthday', 'sid', 'campus'
+        'openid', 'sex', 'id_card', 'height', 'birthday', 'sid'
     ];
 
 
@@ -27,7 +27,7 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     protected $fillable = [
-      'name', 'id_card', 'email', 'sex', 'qq', 'wx_id', 'height', 'birthday', 'phone'
+      'name', 'id_card', 'email', 'sex', 'qq', 'wx_id', 'height', 'birthday', 'phone','campus'
     ];
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
