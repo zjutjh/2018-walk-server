@@ -53,10 +53,18 @@ class YxGroup extends Model
     public function delete()
     {
         $members = $this->members()->get();
+        $data = [
+            'first' => "你的队伍已经被解散",
+            'keyword1' => '队伍解散',
+            'keyword2' => '解散成功',
+            'keyword3' => date('Y-m-d H:i:s', time()),
+            'remark'   => '还想加入队伍，请点击详情'
+        ];
         foreach ($members as $member) {
             $member->yx_group_id = null;
             $memberState = $member->state()->first();
             $memberState->state = 1;
+            $member->notify($data);
             $member->save();
             $memberState->save();
         }
