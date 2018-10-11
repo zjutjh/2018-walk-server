@@ -33,6 +33,9 @@ class LoginController extends Controller
 //        $openid = $request->get('code');
 //        $openid = 'oIRN_t50catBXGiM6I-ZbXofVGZ8';
 //        $openid = 'test';
+        if (!isset($openid)) {
+            return RJM(-1, '用户认证失败');
+        }
 
         if (!$openid) {
             return RJM(-1, '用户认证失败');
