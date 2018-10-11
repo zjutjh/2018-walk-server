@@ -53,7 +53,10 @@ class GroupController extends Controller
     public function updateGroupInfo(Request $request) {
         $user = Auth::user();
         $teamInfo = $request->all();
-        YxGroup::where('captain_id', $user->id)->update($teamInfo);
+        $yxGroup = YxGroup::where('captain_id', $user->id)->first();
+        $yxGroup->fill($teamInfo);
+        $yxGroup->save();
+
         return RJM(1, '更新成功');
 
 
