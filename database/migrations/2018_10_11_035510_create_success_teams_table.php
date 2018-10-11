@@ -15,7 +15,7 @@ class CreateSuccessTeamsTable extends Migration
     {
         Schema::create('success_teams', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('yx_group_id');
+            $table->integer('yx_group_id')->nullable();
             $table->timestamps();
         });
     }

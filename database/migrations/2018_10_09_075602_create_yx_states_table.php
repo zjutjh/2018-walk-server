@@ -17,7 +17,7 @@ class CreateYxStatesTable extends Migration
             $table->increments('id');
             $table->tinyInteger('state')->default(0)->comment('0 开启报名 1 关闭报名');
             $table->integer('max_team_num')->default(1200)->comment('成功报名组数');
-            $table->timestamp('finish_time')->comment('结束报名时间');
+            $table->timestamp('finish_time')->nullable()->comment('结束报名时间');
             $table->timestamps();
         });
     }
