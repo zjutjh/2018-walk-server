@@ -111,6 +111,9 @@ class GroupController extends Controller
         $user = Auth::user();
         $apply_id = $user->id;
         $user->state()->update(['state' => 1]);
+        $uState = $user->state()->first();
+        $uState->state = 1;
+        $uState->save();
         YxApply::where('apply_id', $apply_id)->delete();
         return RJM(1, '撤回成功');
     }
@@ -338,9 +341,9 @@ class GroupController extends Controller
         $user = User::where('id', $delete_id)->first();
         $user->leaveGroup();
         $data = [
-            'first' => "你已经踢出了队伍",
-            'keyword1' => '踢出队伍',
-            'keyword2' => '踢出成功',
+            'first' => "你已经被移出了队伍",
+            'keyword1' => '移出队伍',
+            'keyword2' => '移出成功',
             'keyword3' => date('Y-m-d H:i:s', time()),
             'remark' => '如果你还想加入一个队伍，请进入队伍列表寻找哦'
         ];

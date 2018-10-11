@@ -45,7 +45,7 @@ Route::group(['middleware' => ['auth.token', 'check.finish']], function() {
     Route::get('/team/info', 'GroupController@getGroupInfo');
     Route::get('/team/members', 'GroupController@getGroupMembers');
     Route::get('/apply/team', 'GroupController@getApplyTeam');
-    Route::post('/apply/delete', 'GroupController@deleteApply');
+    Route::get('/apply/delete', 'GroupController@deleteApply');
 
 
 
