@@ -28,7 +28,7 @@ class GroupController extends Controller
         $teamInfo = $request->all();
 
         $user = Auth::user();
-        if (!$user->yx_group_id) {
+        if (!!$user->yx_group_id) {
             return RJM(-1, '你已经拥有队伍');
         }
         $teamInfo['captain_id'] = $user->id;
