@@ -154,7 +154,7 @@ class GroupController extends Controller
         ];
         $user->notify($data);
         $group = $user->group()->first();
-        if ($group->members < 4) {
+        if ($group->toArray()['members'] < 4) {
             $group->up_to_standard = null;
             $group->save();
         }
@@ -358,7 +358,7 @@ class GroupController extends Controller
         $user->notify($data);
         $cUser = Auth::user();
         $group = $cUser->group()->first();
-        if ($group->members < 4) {
+        if ($group->toArray()['members'] < 4) {
             $group->up_to_standard = null;
             $group->save();
         }
