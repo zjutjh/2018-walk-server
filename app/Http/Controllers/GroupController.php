@@ -248,7 +248,7 @@ class GroupController extends Controller
     public function refuseMember(Request $request)
     {
         $apply_id = $request->get('apply_id');
-        YxApply::where('apply', $apply_id)->delete();
+        YxApply::where('apply_id', $apply_id)->delete();
         $user = User::where('id', $apply_id)->first();
         $data = [
             'first' => "你申请的队伍已经拒绝了你的申请",
