@@ -336,7 +336,7 @@ class GroupController extends Controller
     public function deleteMember(Request $request) {
         $delete_id = $request->get('delete_id');
         $user = User::where('id', $delete_id)->first();
-        $user->levelGroup();
+        $user->leaveGroup();
         $data = [
             'first' => "你已经踢出了队伍",
             'keyword1' => '踢出队伍',
