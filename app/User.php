@@ -71,7 +71,7 @@ class User extends Authenticatable implements JWTSubject
     public function notify($data) {
         $config = [
             'openid' => $this->openid,
-            'url'    => '',
+            'url'    => url()->current(),
             'data'   => $data
         ];
         dispatch(new SendTemplate($config));
