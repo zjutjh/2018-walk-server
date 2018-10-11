@@ -22,7 +22,7 @@ class CreateYxGroupsTable extends Migration
             $table->integer('captain_id')->comment('队长id');
             $table->enum('select_route', ['半程', '全程'])->default('全程')->comment('参加路线');
             $table->boolean('is_lock')->default(false)->comment('是否锁定队伍');
-            $table->timestamp('up_to_standard')->default(null)->comment('达到参加要求的时间');
+            $table->timestamp('up_to_standard')->nullable()->default(null)->comment('达到参加要求的时间');
             $table->timestamps();
         });
     }
