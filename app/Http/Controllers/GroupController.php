@@ -6,6 +6,7 @@ use App\User;
 use App\YxApply;
 use App\YxGroup;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class GroupController extends Controller
@@ -242,7 +243,7 @@ class GroupController extends Controller
 
         if ($group->members >= 4) {
             if (!$group->up_to_standard) {
-                $group->up_to_standard = time();
+                $group->up_to_standard = Carbon::now()->toDateTimeString();
                 $group->save();
             }
         }
