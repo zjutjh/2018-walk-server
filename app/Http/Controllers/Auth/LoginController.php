@@ -29,9 +29,9 @@ class LoginController extends Controller
      */
     public function wxLogin(Request $request) {
         $code = $request->get('code');
-//        $openid = $this->getWxOpenid($code);
+        $openid = $this->getWxOpenid($code);
 //        $openid = $request->get('code');
-        $openid = 'oIRN_t50catBXGiM6I-ZbXofVGZ8';
+//        $openid = 'oIRN_t50catBXGiM6I-ZbXofVGZ8';
 //        $openid = 'test';
 
         if (!$openid) {
