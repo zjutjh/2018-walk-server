@@ -16,6 +16,11 @@ class UserController extends Controller
         $user = Auth::user();
         $user->fill($detail);
         $user->save();
+        if ($detail['type'] == 'create') {
+            $uState = $user->state()->first();
+            $uState->state = 1;
+            $uState->save();
+        }
         return RJM(1, '更新信息成功');
 
     }
@@ -40,9 +45,12 @@ class UserController extends Controller
         $user = Auth::user();
         $user->sid = $sid;
         $user->identity = $identity;
-        $uState = $user->state()->first();
-        $uState->state = 1;
-        $uState->save();
+        if (!$user->id_card) {
+            $uState = $user->state()->first();
+            $uState->state = 5;
+            $uState->save();
+        }
+
         $user->save();
 
         return RJM(1, '登录成功,请完善信息');
@@ -56,9 +64,11 @@ class UserController extends Controller
 
         $user = Auth::user();
         $user->identity = $identity;
-        $uState = $user->state()->first();
-        $uState->state = 1;
-        $uState->save();
+        if (!$user->id_card) {
+            $uState = $user->state()->first();
+            $uState->state = 5;
+            $uState->save();
+        }
         $user->save();
 
         return RJM(1, '登录成功,请完善信息');
