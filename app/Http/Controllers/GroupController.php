@@ -250,7 +250,9 @@ class GroupController extends Controller
         $apply_id = $request->get('apply_id');
         YxApply::where('apply_id', $apply_id)->delete();
         $user = User::where('id', $apply_id)->first();
-        $user->state()->update(['state' => 1]);
+        $uState = $user->state()->first();
+        $uState->state = 1;
+        $uState->save();
         $data = [
             'first' => "你申请的队伍已经拒绝了你的申请",
             'keyword1' => '队伍申请',
