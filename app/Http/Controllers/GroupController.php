@@ -241,7 +241,7 @@ class GroupController extends Controller
         $user->notify($data);
         $group = $user->group()->first();
 
-        if ($group->members >= 4) {
+        if ($group->toArray()['members'] >= 4) {
             if (!$group->up_to_standard) {
                 $group->up_to_standard = Carbon::now()->toDateTimeString();
                 $group->save();
