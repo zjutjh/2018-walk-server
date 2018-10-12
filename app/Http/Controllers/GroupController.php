@@ -59,6 +59,12 @@ class GroupController extends Controller
     public function updateGroupInfo(Request $request) {
         $user = Auth::user();
         $teamInfo = $request->all();
+        if (strlen($teamInfo['name']) > 180 ||
+            strlen($teamInfo['description']) > 180
+        ) {
+            return RJM(-1, '名称或描述过长');
+        }
+
         $yxGroup = YxGroup::where('captain_id', $user->id)->first();
         $yxGroup->fill($teamInfo);
         $yxGroup->save();
@@ -273,6 +279,9 @@ class GroupController extends Controller
         $apply_id = $request->get('apply_id');
         YxApply::where('apply_id', $apply_id)->delete();
         $user = User::where('id', $apply_id)->first();
+        if ($user->state()->first()->state != 2) {
+            return RJM(-1, '该申请者已经撤回申请了');
+        }
         $uState = $user->state()->first();
         $uState->state = 1;
         $uState->save();
