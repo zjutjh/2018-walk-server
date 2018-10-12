@@ -40,7 +40,7 @@ Route::group(['middleware' => ['auth.token', 'check.finish']], function() {
     Route::get('/team/unlock', 'GroupController@unlockGroup');
     Route::post('/team/agree', 'GroupController@agreeMember');
     Route::post('/team/refuse', 'GroupController@refuseMember');
-    Route::post('/team/search', 'GroupController@searchTeam');
+    Route::any('/team/search', 'GroupController@searchTeam');
     Route::post('/team/delete', 'GroupController@deleteMember');
     Route::get('/team/info', 'GroupController@getGroupInfo');
     Route::get('/team/members', 'GroupController@getGroupMembers');
