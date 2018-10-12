@@ -14,10 +14,10 @@ class UserController extends Controller
     public function detailInfo(Request $request) {
         $detail = $request->all();
 
-        if (strlen($detail['name']) > 255 ||
-            strlen($detail['qq']) > 255 ||
-            strlen($detail['email']) > 255 ||
-            strlen($detail['wx_id']) > 255
+        if (strlen($detail['name']) > 180 ||
+            strlen($detail['qq']) >  180 ||
+            strlen($detail['email']) > 180 ||
+            strlen($detail['wx_id']) > 180
         ) {
             return RJM(-1, '字段过长');
         }
