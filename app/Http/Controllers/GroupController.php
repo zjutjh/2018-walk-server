@@ -99,8 +99,12 @@ class GroupController extends Controller
     public function doApply(Request $request)
     {
         $groupId = $request->get('groupId');
-        YxApply::create(['apply_team_id' => $groupId, 'apply_id' => Auth::user()->id]);
         $group = YxGroup::where('id', $groupId)->first();
+        if ($group->captain_id == Auth::user()->id) {
+            return RJM(-1, '这是你自己的队伍');
+        }
+        YxApply::create(['apply_team_id' => $groupId, 'apply_id' => Auth::user()->id]);
+
         $group->notifyCaptain();
         $user = Auth::user();
         $data = [
