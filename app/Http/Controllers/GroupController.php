@@ -106,6 +106,10 @@ class GroupController extends Controller
     {
         $groupId = $request->get('groupId');
         $group = YxGroup::where('id', $groupId)->first();
+
+        if ($group->is_lock) {
+            return RJM(-1, '该队伍已经锁定');
+        }
         if ($group->captain_id == Auth::user()->id) {
             return RJM(-1, '这是你自己的队伍');
         }
@@ -132,7 +136,6 @@ class GroupController extends Controller
     public function deleteApply() {
         $user = Auth::user();
         $apply_id = $user->id;
-        $user->state()->update(['state' => 1]);
         $uState = $user->state()->first();
         $uState->state = 1;
         $uState->save();
