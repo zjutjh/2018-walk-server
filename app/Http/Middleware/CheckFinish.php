@@ -18,7 +18,7 @@ class CheckFinish
     {
         $yxState = YxState::where('id', 0)->first();
         if ($yxState->state === 1) {
-            return RJM(1, '关闭报名');
+            return RJM(-1, '关闭报名');
         }
 
         return $next($request);
