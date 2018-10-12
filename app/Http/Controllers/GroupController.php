@@ -289,7 +289,7 @@ class GroupController extends Controller
         if (!$query_string) {
             return $this->groupLists();
         }
-        $groups = YxGroup::where('name', 'like', "%{$query_string}%")->orWhere('id', $query_string)->paginate(15);
+        $groups = YxGroup::where('name', 'like', "%{$query_string}%")->orWhere('id', $query_string)->paginate(100);
         return RJM(1, '搜索成功', $groups);
     }
 

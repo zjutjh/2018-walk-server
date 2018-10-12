@@ -17,11 +17,14 @@ class UserController extends Controller
         if (strlen($detail['name']) > 255 ||
             strlen($detail['qq']) > 255 ||
             strlen($detail['email']) > 255 ||
-            strlen($detail['we_id']) > 255 ||
-            $detail['height'] > 300
+            strlen($detail['wx_id']) > 255
         ) {
-            RJM(-1, '字段过长');
+            return RJM(-1, '字段过长');
         }
+        if ($detail['type'] == 'create' && $detail['height'] > 300) {
+            return RJM(-1, '身高过大');
+        }
+
         $user = Auth::user();
         $user->fill($detail);
         $user->save();
