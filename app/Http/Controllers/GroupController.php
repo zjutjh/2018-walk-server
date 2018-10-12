@@ -238,6 +238,9 @@ class GroupController extends Controller
         $apply_id = $request->get('apply_id');
         $groupId = Auth::user()->yx_group_id;
         $user = User::where('id', $apply_id)->first();
+        if ($user->state()->first()->state != 1) {
+            return RJM(-1, '该申请者已经撤回申请了');
+        }
         $user->addGroup($groupId);
         YxApply::where('apply_id', $apply_id)->delete();
         $data = [
