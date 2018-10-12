@@ -106,10 +106,15 @@ class GroupController extends Controller
     {
         $groupId = $request->get('groupId');
         $group = YxGroup::where('id', $groupId)->first();
+        if ($group->members === $group->num) {
 
+            return RJM(-1, '该队伍已经满员');
+        }
         if ($group->is_lock) {
             return RJM(-1, '该队伍已经锁定');
         }
+
+
         if ($group->captain_id == Auth::user()->id) {
             return RJM(-1, '这是你自己的队伍');
         }
