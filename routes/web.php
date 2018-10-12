@@ -28,7 +28,7 @@ Route::group(['middleware' => ['auth.token', 'check.finish']], function() {
     Route::post('/login/other', 'UserController@verifyOther');
     Route::post('/user/detail', 'UserController@detailInfo');
 
-    Route::get('/team/list', 'GroupController@groupLists');
+    Route::any('/team/list', 'GroupController@groupLists');
     Route::get('/team/apply/list', 'GroupController@getApplyList');
     Route::get('/team/apply/count', 'GroupController@getApplyCount');
     Route::post('/team/create', 'GroupController@createGroup');
