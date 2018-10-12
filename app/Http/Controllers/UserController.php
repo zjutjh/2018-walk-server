@@ -13,7 +13,7 @@ class UserController extends Controller
      */
     public function detailInfo(Request $request) {
         $detail = $request->all();
-        return $detail;
+        return strlen($detail['name']);
 
 //        if (strlen($detail['name']) > 180 ||
 //            strlen($detail['qq']) >  180 ||
