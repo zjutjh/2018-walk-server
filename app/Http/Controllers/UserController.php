@@ -13,27 +13,28 @@ class UserController extends Controller
      */
     public function detailInfo(Request $request) {
         $detail = $request->all();
+        return $detail;
 
-        if (strlen($detail['name']) > 180 ||
-            strlen($detail['qq']) >  180 ||
-            strlen($detail['email']) > 180 ||
-            strlen($detail['wx_id']) > 180
-        ) {
-            return RJM(-1, '字段过长');
-        }
-        if ($detail['type'] == 'create' && $detail['height'] > 300) {
-            return RJM(-1, '身高过大');
-        }
-
-        $user = Auth::user();
-        $user->fill($detail);
-        $user->save();
-        if ($detail['type'] == 'create') {
-            $uState = $user->state()->first();
-            $uState->state = 1;
-            $uState->save();
-        }
-        return RJM(1, '更新信息成功');
+//        if (strlen($detail['name']) > 180 ||
+//            strlen($detail['qq']) >  180 ||
+//            strlen($detail['email']) > 180 ||
+//            strlen($detail['wx_id']) > 180
+//        ) {
+//            return RJM(-1, '字段过长');
+//        }
+//        if ($detail['type'] == 'create' && $detail['height'] > 300) {
+//            return RJM(-1, '身高过大');
+//        }
+//
+//        $user = Auth::user();
+//        $user->fill($detail);
+//        $user->save();
+//        if ($detail['type'] == 'create') {
+//            $uState = $user->state()->first();
+//            $uState->state = 1;
+//            $uState->save();
+//        }
+//        return RJM(1, '更新信息成功');
 
     }
 

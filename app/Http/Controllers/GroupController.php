@@ -27,8 +27,8 @@ class GroupController extends Controller
     public function createGroup(Request $request)
     {
         $teamInfo = $request->all();
-        if (strlen($teamInfo['name'] > 180 ||
-            strlen($teamInfo['description'] > 180))
+        if (strlen($teamInfo['name']) > 180 ||
+            strlen($teamInfo['description']) > 180
         ) {
             return RJM(-1, '名称或描述过长');
         }
