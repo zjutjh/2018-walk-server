@@ -13,6 +13,15 @@ class UserController extends Controller
      */
     public function detailInfo(Request $request) {
         $detail = $request->all();
+
+        if (strlen($detail['name']) > 255 ||
+            strlen($detail['qq']) > 255 ||
+            strlen($detail['email']) > 255 ||
+            strlen($detail['we_id']) > 255 ||
+            $detail['height'] > 300
+        ) {
+            RJM(-1, '字段过长');
+        }
         $user = Auth::user();
         $user->fill($detail);
         $user->save();

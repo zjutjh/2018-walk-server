@@ -27,6 +27,11 @@ class GroupController extends Controller
     public function createGroup(Request $request)
     {
         $teamInfo = $request->all();
+        if (strlen($teamInfo['name'] > 255 ||
+            strlen($teamInfo['description'] > 255))
+        ) {
+            return RJM(-1, '名称或描述过长');
+        }
 
         $user = Auth::user();
         if (!!$user->yx_group_id) {
@@ -281,6 +286,9 @@ class GroupController extends Controller
     public function searchTeam(Request $request)
     {
         $query_string = $request->get('query_string');
+        if (!$query_string) {
+            return $this->groupLists();
+        }
         $groups = YxGroup::where('name', 'like', "%{$query_string}%")->orWhere('id', $query_string)->paginate(15);
         return RJM(1, '搜索成功', $groups);
     }
