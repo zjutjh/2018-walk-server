@@ -16,8 +16,8 @@ Route::get('/', function () {
 });
 
 Route::get('/oauth', 'Auth\LoginController@oauth');
-Route::post('/wx/autologin', 'Auth\LoginController@wxLogin');
-Route::get('/wx/getUserInfo', 'Auth\LoginController@getUserInfo');
+Route::post('/wx/autologin', 'Auth\LoginController@wxLogin')->middleware('check.finish');
+Route::get('/wx/getUserInfo', 'Auth\LoginController@getUserInfo')->middleware('check.finish');
 
 
 
