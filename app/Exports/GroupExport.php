@@ -69,7 +69,7 @@ class GroupExport implements FromCollection, WithMapping, WithHeadings
             '队伍路线',
             '达到要求时间',
             '队员1',
-            '队员1-id'.
+            '队员1-id',
             '队员2',
             '队员2-id',
             '队员3',
