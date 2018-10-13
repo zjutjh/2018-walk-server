@@ -21,11 +21,19 @@ class YxGroup extends Model
     }
 
     /**
+     * 获取成功id映射
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function success() {
+        return $this->hasMany('App\SuccessTeam','yx_group_id');
+    }
+
+    /**
      * 追加字段
      * @var array
      */
     protected $appends = [
-        'members'
+        'members', 'success_id'
     ];
 
     /**
@@ -34,6 +42,16 @@ class YxGroup extends Model
     public function getMembersAttribute() {
         return $this->members()->count();
     }
+
+
+    /**
+     * 获取成功id
+     * @return int
+     */
+    public function getSuccessIdAttribute() {
+        return $this->success()->first()->id;
+    }
+
 
 
 
