@@ -39,7 +39,7 @@ class GroupExport implements FromCollection, WithMapping, WithHeadings
             $row->description,
             $row->start_campus,
             $row->select_route,
-            !$row->up_to_standard ? '' :Date::dateTimeToExcel($row->up_to_standard),
+            $row->up_to_standard,
             isset($names[0]) ? $names[0]['name'] : '',
             isset($names[0]) ? $names[0]['id'] : '',
             isset($names[1]) ? $names[1]['name'] : '',
