@@ -42,9 +42,9 @@ class CreateTeam extends Command
         $groups = YxGroup::whereNotNull('up_to_standard')->get();
         foreach ($groups as $group) {
             $success = new SuccessTeam();
-            echo "{$success->id}:{$group->id}:{$group->name}\r\n";
             $success->yx_group_id = $group->id;
             $success->save();
+            echo "{$success->id}:{$group->id}:{$group->name}\r\n";
         }
     }
 }
