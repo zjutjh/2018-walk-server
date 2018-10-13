@@ -33,7 +33,7 @@ class GroupExport implements FromCollection, WithMapping, WithHeadings
         }
 
         return [
-            isset($row->success()->id)? $row->success()->id : '',
+            isset($row->success()->id)? $row->success()->id : '等待报名结束',
             $row->id,
             $row->name,
             $row->description,
