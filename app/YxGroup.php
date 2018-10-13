@@ -49,6 +49,9 @@ class YxGroup extends Model
      * @return int
      */
     public function getSuccessIdAttribute() {
+        if (!$this->success()->first()) {
+            return null;
+        }
         return $this->success()->first()->id;
     }
 

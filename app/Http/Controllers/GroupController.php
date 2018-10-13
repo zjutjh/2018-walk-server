@@ -285,11 +285,12 @@ class GroupController extends Controller
     public function refuseMember(Request $request)
     {
         $apply_id = $request->get('apply_id');
-        YxApply::where('apply_id', $apply_id)->delete();
+
         $user = User::where('id', $apply_id)->first();
         if ($user->state()->first()->state != 2) {
             return RJM(-1, '该申请者已经撤回申请了');
         }
+        YxApply::where('apply_id', $apply_id)->delete();
         $uState = $user->state()->first();
         $uState->state = 1;
         $uState->save();
