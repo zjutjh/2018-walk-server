@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UsersExport;
 use App\Services\UserCenterService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class UserController extends Controller
 {
@@ -83,6 +86,15 @@ class UserController extends Controller
         $user->save();
 
         return RJM(1, '登录成功,请完善信息');
+
+    }
+
+
+    /*
+     * 获取报名名单
+     */
+    public function download() {
+        return Excel::download(new UsersExport(), '报名名单.xlsx');
 
     }
 

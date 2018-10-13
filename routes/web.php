@@ -55,5 +55,8 @@ Route::group(['middleware' => ['auth.token', 'check.finish']], function() {
 });
 Route::get('/get/end', 'IndexController@verifyApplyEnd');
 
+Route::get('/user/download', 'UserController@download')->name('user');
+Route::get('/group/download', 'IndexController@teamDownload')->name('group');
+
 Route::post('/test', 'Auth\LoginController@wxLogin');
 
