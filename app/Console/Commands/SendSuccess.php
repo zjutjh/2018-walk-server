@@ -6,14 +6,14 @@ use App\SuccessTeam;
 use App\YxGroup;
 use Illuminate\Console\Command;
 
-class CreateTeam extends Command
+class SendSuccess extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'create:success';
+    protected $signature = 'send:success';
 
     /**
      * The console command description.
@@ -39,16 +39,21 @@ class CreateTeam extends Command
      */
     public function handle()
     {
-        $groups = YxGroup::whereNotNull('up_to_standard')->latest('up_to_standard')->get();
+        $groups = SuccessTeam::all();
         foreach ($groups as $group) {
-            $success = new SuccessTeam();
-            $success->yx_group_id = $group->id;
-            $success->save();
-            echo "{$success->id}:{$group->id}:{$group->name}\r\n";
-
-            if (SuccessTeam::count() > 1200) {
-                break;
+            $team = YxGroup::find($group->yx_group_id);
+            $members = $team->members()->get();
+            foreach ($members as $member) {
+                $data = [
+                    'first' => "模拟报名失败",
+                    'keyword1' => '报名失败',
+                    'keyword2' => '消息通知',
+                    'keyword3' => date('Y-m-d H:i:s', time()),
+                    'remark'   => '收到请忽略'
+                ];
+                $member->notify($data);
             }
+
         }
     }
 }
