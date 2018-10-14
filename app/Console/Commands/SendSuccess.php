@@ -43,14 +43,17 @@ class SendSuccess extends Command
         foreach ($groups as $group) {
             $team = YxGroup::find($group->yx_group_id);
             $members = $team->members()->get();
+            echo "{$team->id}:{$team->name}\n";
             foreach ($members as $member) {
+                echo "{$member->id}:{$member->name}";
                 $data = [
-                    'first' => "模拟报名失败",
-                    'keyword1' => '报名失败',
+                    'first' => "模拟报名成功",
+                    'keyword1' => '报名成功',
                     'keyword2' => '消息通知',
                     'keyword3' => date('Y-m-d H:i:s', time()),
-                    'remark'   => '收到请忽略'
+                    'remark'   => "恭喜你的队伍成功报名精弘毅行, 你当天参与活动的正式队伍号码为：{$team->success_id}"
                 ];
+                echo $data['remark'] . "\n";
                 $member->notify($data);
             }
 
