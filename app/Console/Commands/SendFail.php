@@ -52,7 +52,7 @@ class SendFail extends Command
             }
 
             echo "{$group->id}:{$group->name}\n";
-            $members = $groups->members()->get();
+            $members = $group->members()->get();
             foreach ($members as $member) {
                 echo "{$member->id}:{$member->name}\n";
                 $member->notify($data);
