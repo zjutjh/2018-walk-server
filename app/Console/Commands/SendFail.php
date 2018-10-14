@@ -48,15 +48,15 @@ class SendFail extends Command
         ];
         foreach ($groups as $group) {
             if (!$group->up_to_standard) {
-                continue;
+                echo "{$group->id}:{$group->name}\n";
+                $members = $group->members()->get();
+                foreach ($members as $member) {
+                    echo "{$member->id}:{$member->name}\n";
+                    $member->notify($data);
+                }
             }
 
-            echo "{$group->id}:{$group->name}\n";
-            $members = $group->members()->get();
-            foreach ($members as $member) {
-                echo "{$member->id}:{$member->name}\n";
-                $member->notify($data);
-            }
+
         }
     }
 }
