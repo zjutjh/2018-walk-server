@@ -115,7 +115,7 @@ class GroupController extends Controller
             return RJM(-1, '该队伍已经锁定');
         }
 
-        if ($group->select_route = '朝晖短途') {
+        if ($group->select_route == '朝晖短途') {
             if ($user->campus = '屏峰') {
                 return RJM(-1, '你无法参加朝晖短途');
             }
