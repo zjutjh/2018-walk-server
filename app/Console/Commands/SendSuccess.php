@@ -47,11 +47,12 @@ class SendSuccess extends Command
             foreach ($members as $member) {
                 echo "{$member->id}:{$member->name}";
                 $data = [
-                    'first' => "模拟报名成功",
+                    'first' => "{$member->name} 你好，在这里恭喜你成功报名参加精弘毅行",
                     'keyword1' => '报名成功',
                     'keyword2' => '消息通知',
                     'keyword3' => date('Y-m-d H:i:s', time()),
                     'remark'   => "恭喜你的队伍成功报名精弘毅行, 你当天参与活动的正式队伍号码为：{$team->success_id}"
+                                  .""
                 ];
                 echo $data['remark'] . "\n";
                 $member->notify($data);
