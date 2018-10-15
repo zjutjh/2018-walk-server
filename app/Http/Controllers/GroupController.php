@@ -104,6 +104,7 @@ class GroupController extends Controller
      */
     public function doApply(Request $request)
     {
+        $user = Auth::user();
         $groupId = $request->get('groupId');
         $group = YxGroup::where('id', $groupId)->first();
         if ($group->members === $group->num) {
@@ -114,6 +115,12 @@ class GroupController extends Controller
             return RJM(-1, '该队伍已经锁定');
         }
 
+        if ($group->select_route = '朝晖短途') {
+            if ($user->campus = '屏峰') {
+                return RJM(-1, '你无法参加朝晖短途');
+            }
+        }
+
 
         if ($group->captain_id == Auth::user()->id) {
             return RJM(-1, '这是你自己的队伍');
@@ -121,7 +128,7 @@ class GroupController extends Controller
         YxApply::create(['apply_team_id' => $groupId, 'apply_id' => Auth::user()->id]);
 
         $group->notifyCaptain();
-        $user = Auth::user();
+
         $data = [
             'first' => "你正在申请 {$group->name} 的队伍",
             'keyword1' => '队伍申请',
