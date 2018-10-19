@@ -39,7 +39,7 @@ class CreateTeam extends Command
      */
     public function handle()
     {
-        $groups = YxGroup::whereNotNull('up_to_standard')->oldest('up_to_standard')->orderBy('select_route')->get();
+        $groups = YxGroup::whereNotNull('up_to_standard')->where('select_route', '<>', '朝晖京杭大运河毅行')->oldest('up_to_standard')->orderBy('select_route')->get();
         foreach ($groups as $group) {
             $success = new SuccessTeam();
             $success->yx_group_id = $group->id;
