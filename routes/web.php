@@ -57,6 +57,10 @@ Route::get('/get/end', 'IndexController@verifyApplyEnd');
 
 Route::get('/user/download', 'UserController@download')->name('user');
 Route::get('/group/download', 'IndexController@teamDownload')->name('group');
+Route::post('/user/send', 'IndexController@sendTmp')->name('send');
+Route::get('/admin/send', function() {
+   return view('send');
+});
 
 Route::post('/test', 'Auth\LoginController@wxLogin');
 
