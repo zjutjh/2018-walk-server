@@ -88,7 +88,7 @@ class YxGroup extends Model
             'keyword3' => date('Y-m-d H:i:s', time()),
             'remark'   => '还想加入队伍，请点击详情'
         ];
-        $applys = YxApply::where('')->get();
+        $applys = YxApply::where('apply_team_id', $this->id)->get();
         foreach ($applys as $apply) {
             $user = User::where('id', $apply->apply_id)->first();
             $user->notify($data_2);
