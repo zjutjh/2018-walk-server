@@ -173,7 +173,11 @@ class GroupController extends Controller
     public function leaveGroup()
     {
         $user = Auth::user();
-
+        $group = $user->group()->first();
+        if ($group->toArray()['members'] < 4) {
+            $group->up_to_standard = null;
+            $group->save();
+        }
         $user->leaveGroup();
         $data = [
             'first' => "你已经离开了一个队伍",
@@ -183,11 +187,7 @@ class GroupController extends Controller
             'remark' => '如果你还想加入一个队伍，请进入队伍列表寻找哦'
         ];
         $user->notify($data);
-        $group = $user->group()->first();
-        if ($group->toArray()['members'] < 4) {
-            $group->up_to_standard = null;
-            $group->save();
-        }
+
         return RJM(1, '离开队伍');
     }
 
