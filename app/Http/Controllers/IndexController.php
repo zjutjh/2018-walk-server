@@ -13,6 +13,11 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class IndexController extends Controller
 {
+
+    /**
+     * 获取首页信息
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function indexInfo() {
         $yxState = YxState::where('id', 0)->first();
         $indexInfo = [
@@ -25,6 +30,11 @@ class IndexController extends Controller
 
     }
 
+
+    /**
+     * 报名是否关闭
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function verifyApplyEnd() {
         $yxState = YxState::where('id', 0)->first();
         if ($yxState->state === 1) {
@@ -35,6 +45,10 @@ class IndexController extends Controller
     }
 
 
+    /**
+     * 首页信息统计
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function count() {
         $apply_count = User::getUserCount();
         $team_count = YxGroup::getTeamCount();

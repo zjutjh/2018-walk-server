@@ -81,6 +81,22 @@ class YxGroup extends Model
             'keyword3' => date('Y-m-d H:i:s', time()),
             'remark'   => '还想加入队伍，请点击详情'
         ];
+        $data_2 = [
+            'first' => "你申请的队伍已经被解散",
+            'keyword1' => '队伍解散',
+            'keyword2' => '解散成功',
+            'keyword3' => date('Y-m-d H:i:s', time()),
+            'remark'   => '还想加入队伍，请点击详情'
+        ];
+        $applys = YxApply::where('')->get();
+        foreach ($applys as $apply) {
+            $user = User::where('id', $apply->apply_id)->first();
+            $user->notify($data_2);
+            $userState = $user->state()->first();
+            $userState->state = 1;
+            $userState->save();
+            $apply->delete();
+        }
         foreach ($members as $member) {
             $member->yx_group_id = null;
             $memberState = $member->state()->first();
