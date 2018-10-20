@@ -116,7 +116,7 @@ class GroupController extends Controller
         }
 
         if ($group->select_route == '朝晖京杭大运河毅行') {
-            if ($user->campus = '屏峰') {
+            if ($user->campus == '屏峰') {
                 return RJM(-1, '你无法参加朝晖京杭大运河毅行');
             }
         }
