@@ -29,8 +29,12 @@ class GroupExport implements FromCollection, WithMapping, WithHeadings
         $members = $row->members()->get();
         $names = [];
         foreach ($members as $member) {
-            $names [] = ['name' => $member->name, 'id' => $member->id];
+            $names [] = ['name' => $member->name, 'id' => $member->id, 'state' => $member->state->state];
         }
+
+        $names = array_sort($names, function($value) {
+            return $value['state'];
+        });
 
         return [
             !$row->success()->first()?  '等待报名结束': $row->success()->first()->id,
@@ -68,8 +72,8 @@ class GroupExport implements FromCollection, WithMapping, WithHeadings
             '出发校区',
             '队伍路线',
             '达到要求时间',
-            '队员1',
-            '队员1-id',
+            '队长',
+            '队长-id',
             '队员2',
             '队员2-id',
             '队员3',
