@@ -156,10 +156,13 @@ class GroupController extends Controller
     public function deleteApply() {
         $user = Auth::user();
         $apply_id = $user->id;
+        if (!$apply = YxApply::where('apply_id', $apply_id)->first()) {
+            return RJM(-1, '你的申请已经处理');
+        }
         $uState = $user->state()->first();
         $uState->state = 1;
         $uState->save();
-        YxApply::where('apply_id', $apply_id)->delete();
+        $apply->delete();
         return RJM(1, '撤回成功');
     }
 
