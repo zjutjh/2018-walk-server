@@ -64,8 +64,16 @@ class GroupController extends Controller
         ) {
             return RJM(-1, '名称或描述过长');
         }
-
         $yxGroup = YxGroup::where('captain_id', $user->id)->first();
+
+        if ($teamInfo['select_route'] == '朝晖京杭大运河毅行') {
+            $members = $yxGroup->members()->where('campus', '屏峰')->count();
+            if ($members > 0) {
+                return RJM(-1, '你队伍里有屏峰的队员');
+            }
+        }
+
+
         $yxGroup->fill($teamInfo);
         $yxGroup->save();
 
