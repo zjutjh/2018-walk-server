@@ -62,7 +62,7 @@ class UserCenterService
         if (isset($value['state']) && $value['state'] == 'success') {
             return true;
         } else {
-            return $this->setError('用户名或密码');
+            return $this->setError('用户名或密码错误');
         }
 
 
