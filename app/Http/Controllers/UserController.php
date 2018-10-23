@@ -98,5 +98,18 @@ class UserController extends Controller
 
     }
 
+    /**
+     * 确认是否关注公众号
+     */
+    private function identifyGz($openid) {
+        $client = new Client();
+        $response = $client->request('GET', 'https://api.weixin.qq.com/sns/oauth2/access_token?appid='.env('WECHAT_APPID').'&secret='.env('WECHAT_SECRET').'&code='.$code.'&grant_type=authorization_code', ['verify' => false]);
+        $data = json_decode($response->getBody(), true);
+        if (isset($data['openid'])) {
+            return $data['openid'];
+        }
+        return null;
+    }
+
 
 }

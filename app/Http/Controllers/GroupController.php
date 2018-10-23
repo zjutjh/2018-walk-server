@@ -17,7 +17,7 @@ class GroupController extends Controller
      */
     public function groupLists()
     {
-        $groups = YxGroup::paginate(15);
+        $groups = YxGroup::orderBy('id', 'desc')->paginate(15);
         return RJM(1, '获取数据成功', $groups);
     }
 
