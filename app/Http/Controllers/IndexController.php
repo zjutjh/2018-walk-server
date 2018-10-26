@@ -64,6 +64,24 @@ class IndexController extends Controller
 
 
     /**
+     * 给琪琪测试的api
+     */
+    public function toQq() {
+        $apply_count = User::getUserCount();
+        $team_count = YxGroup::getTeamCount();
+        $upToTeam = YxGroup::whereNotNull('up_to_standard')->where('select_route', '<>', '朝晖京杭大运河毅行')->count();
+        $chToTeam = YxGroup::whereNotNull('up_to_standard')->where('select_route', '朝晖京杭大运河毅行')->count();
+        $data = array(
+            'apply_count' => $apply_count,
+            'team_count' => $team_count,
+            'pf' => $upToTeam,
+            'ch' => $chToTeam
+        );
+
+        return RJM(1, '获取成功', $data);
+    }
+
+    /**
      * 获取队伍名单
      */
     public function teamDownload() {
