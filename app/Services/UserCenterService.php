@@ -54,15 +54,20 @@ class UserCenterService
         ];
         $client = new Client();
 
-        if (!$content = $client->get(config('api.jh.center') . "?" . http_build_query($data), ['http_errors' => false]))
+        try {
+
+            if (!$content = $client->get(config('api.jh.center') . "?" . http_build_query($data), ['http_errors' => false]))
+                return $this->setError('用户中心服务器错误');
+            if (!$value = json_decode((string)$content->getBody(), true)) {
+                return $this->setError('用户中心服务器错误');
+            }
+            if (isset($value['state']) && $value['state'] == 'success') {
+                return true;
+            } else {
+                return $this->setError('用户名或密码错误');
+            }
+        } catch (RequestException $e) {
             return $this->setError('用户中心服务器错误');
-        if (!$value = json_decode((string)$content->getBody(), true)) {
-            return $this->setError('用户中心服务器错误');
-        }
-        if (isset($value['state']) && $value['state'] == 'success') {
-            return true;
-        } else {
-            return $this->setError('用户名或密码错误');
         }
 
 
