@@ -29,7 +29,7 @@ class GroupExport implements FromCollection, WithMapping, WithHeadings
         $members = $row->members()->get();
         $names = [];
         foreach ($members as $member) {
-            $names [] = ['name' => $member->name, 'id' => $member->id, 'state' => $member->state->state];
+            $names [] = ['name' => $member->name, 'id' => $member->id, 'state' => $member->state->state, 'identity' => $member->identity];
         }
 
         $names = array_sort($names, function($value) {
@@ -44,6 +44,8 @@ class GroupExport implements FromCollection, WithMapping, WithHeadings
             $row->start_campus,
             $row->select_route,
             $row->up_to_standard,
+            count($members),
+            isset($names[0]) ? $names[0]['identity'] : '',
             isset($names[0]) ? $names[0]['name'] : '',
             isset($names[0]) ? $names[0]['id'] : '',
             isset($names[1]) ? $names[1]['name'] : '',
@@ -72,6 +74,8 @@ class GroupExport implements FromCollection, WithMapping, WithHeadings
             '出发校区',
             '队伍路线',
             '达到要求时间',
+            '队伍人数',
+            '队长身份',
             '队长',
             '队长-id',
             '队员2',
