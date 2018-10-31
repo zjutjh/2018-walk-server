@@ -29,6 +29,7 @@ class UsersExport implements FromCollection, WithMapping, WithHeadings
     public function map($user): array
     {
 
+        $success = SuccessTeam::where('yx_group_id', $user->yx_group_id)->first();
         return [
           $user->id,
           $user->name,
@@ -42,7 +43,7 @@ class UsersExport implements FromCollection, WithMapping, WithHeadings
           $user->wx_id,
           $user->qq,
           $user->yx_group_id,
-          !$user->group()->first()->success()->first() ?  '等待报名结束': $user->group()->first()->success()->first()->id,
+          !$success ?  '等待报名结束': $success->id,
         ];
     }
 
