@@ -48,6 +48,7 @@ class UsersExport implements FromCollection, WithMapping, WithHeadings
           $user->yx_group_id,
           !$success ?  '等待报名结束': $success->id,
             !$group ? '未组队' : $group->captain_id,
+            $user->id_card
         ];
     }
 
@@ -69,7 +70,8 @@ class UsersExport implements FromCollection, WithMapping, WithHeadings
             'qq',
             '系统队伍号',
             '正式队伍号',
-            '队长id'
+            '队长id',
+            '身份证hash'
         ];
     }
 }
