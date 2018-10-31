@@ -436,7 +436,7 @@ class GroupController extends Controller
                 return RJM(-1, '对不起你的队伍没有达到4人或4人以上要求或者没有满足前1200有效队伍', $group);
             }
         }
-        $members = $user->group()->first()->members()->get()
+        $members = $user->group()->first()->members()->get();
         return RJM(1, '恭喜你的队伍和你成功报名精弘毅行', $members);
 
     }
