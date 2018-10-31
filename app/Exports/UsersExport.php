@@ -4,6 +4,7 @@ namespace App\Exports;
 
 use App\SuccessTeam;
 use App\User;
+use App\YxGroup;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
@@ -30,11 +31,13 @@ class UsersExport implements FromCollection, WithMapping, WithHeadings
     {
 
         $success = SuccessTeam::where('yx_group_id', $user->yx_group_id)->first();
+        $group = YxGroup::find($user->yx_group_id);
         return [
           $user->id,
           $user->name,
           $user->sex,
           $user->campus,
+          !$group ? '未组队' : $group->select_route,
           $user->height,
           $user->birthday,
           $user->identity,
@@ -55,6 +58,7 @@ class UsersExport implements FromCollection, WithMapping, WithHeadings
             '姓名',
             '性别',
             '校区',
+            '路线',
             '身高',
             '生日',
             '身份',
