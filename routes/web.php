@@ -16,13 +16,14 @@ Route::get('/', function () {
 });
 
 Route::get('/oauth', 'Auth\LoginController@oauth');
-Route::post('/wx/autologin', 'Auth\LoginController@wxLogin')->middleware('check.finish');
-Route::get('/wx/getUserInfo', 'Auth\LoginController@getUserInfo')->middleware('check.finish');
+Route::post('/wx/autologin', 'Auth\LoginController@wxLogin');
+Route::get('/wx/getUserInfo', 'Auth\LoginController@getUserInfo');
 
 
 
 Route::get('/index/info', 'IndexController@indexInfo');
 Route::get('/info/count', 'IndexController@count');
+Route::get('/result', 'GroupController@result');
 Route::group(['middleware' => ['auth.token', 'check.finish']], function() {
     Route::post('/login/stu', 'UserController@verifyStu');
     Route::post('/login/other', 'UserController@verifyOther');

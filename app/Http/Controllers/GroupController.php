@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\SuccessTeam;
 use App\User;
 use App\YxApply;
 use App\YxGroup;
@@ -414,6 +415,29 @@ class GroupController extends Controller
             $group->save();
         }
         return RJM(1, '踢出队伍');
+
+    }
+
+    /**
+     * 最后结果
+     */
+    public function result() {
+        $user = Auth::user();
+        if (!$user->yx_group_id) {
+            return RJM(-1, '对不起你没有队伍, 所以你没有成功报名');
+        }
+
+        $group = $user->group()->first();
+
+        if (!$success = SuccessTeam::where('yx_group_id', $user->yx_group_id)) {
+            if ($group->select_route == '朝晖京杭大运河毅行') {
+                return RJM(-1, '对不起你的队伍没有达到4人或4人以上要求');
+            } else {
+                return RJM(-2, '对不起你的队伍没有达到4人或4人以上要求或者没有满足前1200有校队伍', $group);
+            }
+        }
+
+        return RJM(1, '恭喜你的队伍和你成功报名精弘毅行', $group);
 
     }
 
