@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use App\SuccessTeam;
 use App\User;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -27,6 +28,7 @@ class UsersExport implements FromCollection, WithMapping, WithHeadings
      */
     public function map($user): array
     {
+
         return [
           $user->id,
           $user->name,
@@ -39,7 +41,8 @@ class UsersExport implements FromCollection, WithMapping, WithHeadings
           $user->phone,
           $user->wx_id,
           $user->qq,
-          $user->yx_group_id
+          $user->yx_group_id,
+          !$user->group()->first()->success()->first() ?  '等待报名结束': $user->group()->first()->success()->first()->id,
         ];
     }
 
@@ -58,7 +61,8 @@ class UsersExport implements FromCollection, WithMapping, WithHeadings
             '电话号码',
             '微信',
             'qq',
-            '队伍号'
+            '系统队伍号',
+            '正式队伍号'
         ];
     }
 }
