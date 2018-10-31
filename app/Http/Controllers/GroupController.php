@@ -433,11 +433,11 @@ class GroupController extends Controller
             if ($group->select_route == '朝晖京杭大运河毅行') {
                 return RJM(-1, '对不起你的队伍没有达到4人或4人以上要求');
             } else {
-                return RJM(-2, '对不起你的队伍没有达到4人或4人以上要求或者没有满足前1200有校队伍', $group);
+                return RJM(-1, '对不起你的队伍没有达到4人或4人以上要求或者没有满足前1200有效队伍', $group);
             }
         }
-
-        return RJM(1, '恭喜你的队伍和你成功报名精弘毅行', $group);
+        $members = $user->group()->first()->members()->get()
+        return RJM(1, '恭喜你的队伍和你成功报名精弘毅行', $members);
 
     }
 
