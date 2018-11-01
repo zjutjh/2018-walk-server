@@ -425,6 +425,7 @@ class GroupController extends Controller
     public function result() {
         $user = Auth::user();
         if (!$group = $user->group()->first()) {
+            Log::info('没有队伍', ['user' => $user]);
             return RJM(-1, '对不起你没有队伍, 所以你没有成功报名');
         }
 
