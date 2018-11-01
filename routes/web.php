@@ -23,7 +23,7 @@ Route::get('/wx/getUserInfo', 'Auth\LoginController@getUserInfo');
 
 Route::get('/index/info', 'IndexController@indexInfo');
 Route::get('/info/count', 'IndexController@count');
-Route::get('/result', 'GroupController@result');
+Route::get('/result', 'GroupController@result')->middleware('auth.token');
 Route::group(['middleware' => ['auth.token', 'check.finish']], function() {
     Route::post('/login/stu', 'UserController@verifyStu');
     Route::post('/login/other', 'UserController@verifyOther');
