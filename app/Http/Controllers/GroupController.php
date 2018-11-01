@@ -423,11 +423,11 @@ class GroupController extends Controller
      */
     public function result() {
         $user = Auth::user();
-        if (!$user->yx_group_id) {
+        if (!$group = $user->group()->first()) {
             return RJM(-1, '对不起你没有队伍, 所以你没有成功报名');
         }
 
-        $group = $user->group()->first();
+
 
         if (!$success = SuccessTeam::where('yx_group_id', $user->yx_group_id)) {
             if ($group->select_route == '朝晖京杭大运河毅行') {
