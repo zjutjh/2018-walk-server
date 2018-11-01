@@ -430,7 +430,7 @@ class GroupController extends Controller
 
 
 
-        if (!$success = SuccessTeam::where('yx_group_id', $group->id)) {
+        if (!$success = SuccessTeam::where('yx_group_id', $group->id)->first()) {
             Log::info('失败查询', ['id' => $user->id, 'group' => $group]);
             if ($group->select_route == '朝晖京杭大运河毅行') {
                 return RJM(-1, '对不起你的队伍没有达到4人或4人以上要求');
