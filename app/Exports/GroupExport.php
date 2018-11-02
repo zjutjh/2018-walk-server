@@ -2,6 +2,7 @@
 
 namespace App\Exports;
 
+use App\User;
 use App\YxGroup;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -26,7 +27,8 @@ class GroupExport implements FromCollection, WithMapping, WithHeadings
      */
     public function map($row): array
     {
-        $members = $row->members()->get();
+        $captain = User::find($row->captain_id);
+        $members = $row->members()->where('id', '<>', $row->captain_id)->get();
         $names = [];
         foreach ($members as $member) {
             $names [] = ['name' => $member->name, 'id' => $member->id, 'state' => $member->state->state, 'identity' => $member->identity];
@@ -44,8 +46,10 @@ class GroupExport implements FromCollection, WithMapping, WithHeadings
             $row->start_campus,
             $row->select_route,
             $row->up_to_standard,
-            count($members),
-            isset($names[0]) ? $names[0]['identity'] : '',
+            count($members) + 1,
+            $captain->identity,
+            $captain->name,
+            $captain->id,
             isset($names[0]) ? $names[0]['name'] : '',
             isset($names[0]) ? $names[0]['id'] : '',
             isset($names[1]) ? $names[1]['name'] : '',
@@ -56,8 +60,6 @@ class GroupExport implements FromCollection, WithMapping, WithHeadings
             isset($names[3]) ? $names[3]['id'] : '',
             isset($names[4]) ? $names[4]['name'] : '',
             isset($names[4]) ? $names[4]['id'] : '',
-            isset($names[5]) ? $names[5]['name'] : '',
-            isset($names[5]) ? $names[5]['id'] : '',
         ];
     }
 
