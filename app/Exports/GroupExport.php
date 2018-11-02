@@ -39,7 +39,7 @@ class GroupExport implements FromCollection, WithMapping, WithHeadings
         });
 
         return [
-            !$row->success()->first()?  '等待报名结束': $row->success()->first()->id,
+            !$row->success()->first()?  '失败队伍': $row->success()->first()->id,
             $row->id,
             $row->name,
             $row->description,
