@@ -1,7 +1,7 @@
 @component('mail::message')
 # {{ $title }}
 
-{{  nl2br($body) }}
+{!! nl2br($body) !!}
 
 
 <br>
