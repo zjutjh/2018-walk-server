@@ -3,8 +3,10 @@
 namespace App;
 
 use App\Jobs\SendTemplate;
+use App\Mail\Message;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Mail;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
@@ -75,6 +77,7 @@ class User extends Authenticatable implements JWTSubject
             'data'   => $data
         ];
         dispatch(new SendTemplate($config));
+        Mail::to($this)->queue(new Message($config));
     }
 
     /**
