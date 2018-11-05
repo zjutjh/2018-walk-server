@@ -64,7 +64,7 @@ class SendSuccess extends Command
                                   . $mbs_string
                 ];
                 echo $data['remark'] . "\n";
-                $member->notify($data);
+                //$member->notify($data);
             }
 
         }
