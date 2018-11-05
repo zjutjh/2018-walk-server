@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\SuccessTeam;
+use App\User;
 use App\YxGroup;
 use Illuminate\Console\Command;
 
@@ -43,6 +44,12 @@ class SendSuccess extends Command
         foreach ($groups as $group) {
             $team = YxGroup::find($group->yx_group_id);
             $members = $team->members()->get();
+            $caption = User::find($team->captain_id);
+            $mbs = $team->members()->where('id', '<>', $team->captain_id)->get();
+            $mbs_string = "";
+            foreach ($mbs as $mb) {
+                $mbs_string .= "队员:{$mb->name}\r\n";
+            }
             echo "{$team->id}:{$team->name}\n";
             foreach ($members as $member) {
                 echo "{$member->id}:{$member->name}";
@@ -52,7 +59,9 @@ class SendSuccess extends Command
                     'keyword2' => '消息通知',
                     'keyword3' => date('Y-m-d H:i:s', time()),
                     'remark'   => "恭喜你的队伍成功报名精弘毅行, 你当天参与活动的正式队伍号码为：{$team->success_id}"
-                                  .""
+                                  . "\r\n"
+                                  . "队长：{$caption->name}\r\n"
+                                  . $mbs_string
                 ];
                 echo $data['remark'] . "\n";
                 $member->notify($data);
