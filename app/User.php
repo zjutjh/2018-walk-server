@@ -77,7 +77,7 @@ class User extends Authenticatable implements JWTSubject
             'data'   => $data
         ];
         dispatch(new SendTemplate($config));
-        Mail::to($this)->later( now()->addMinutes(10),new Message($config));
+//        Mail::to($this)->later(now()->addMinutes(10),new Message($config));
     }
 
     /**
