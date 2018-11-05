@@ -48,7 +48,7 @@ class SendSuccess extends Command
             $mbs = $team->members()->where('id', '<>', $team->captain_id)->get();
             $mbs_string = "";
             foreach ($mbs as $mb) {
-                $mbs_string .= "队员:{$mb->name}\r\n";
+                $mbs_string .= "队员: {$mb->name}\r\n";
             }
             echo "{$team->id}:{$team->name}\n";
             foreach ($members as $member) {
@@ -61,7 +61,7 @@ class SendSuccess extends Command
                     'remark'   => "恭喜你的队伍成功报名精弘毅行, 你当天参与活动的正式队伍号码为：{$team->success_id}"
                                   . "\r\n"
                                   . "队长：{$caption->name}\r\n"
-                                  . $mbs_string
+                                  . $mbs_string . "毅行具体时间后续会在通知"
                 ];
                 echo $data['remark'] . "\n";
                 //$member->notify($data);
