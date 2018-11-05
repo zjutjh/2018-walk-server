@@ -64,7 +64,7 @@ class SendSuccess extends Command
                                   . $mbs_string . "毅行具体时间后续会在通知"
                 ];
                 echo $data['remark'] . "\n";
-                //$member->notify($data);
+                $member->notify($data);
             }
 
         }
