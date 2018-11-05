@@ -76,8 +76,8 @@ class User extends Authenticatable implements JWTSubject
             'url'    => 'http://walk.zjutjh.com',
             'data'   => $data
         ];
-       // dispatch(new SendTemplate($config));
-        Mail::to($this)->queue(new Message($config));
+        dispatch(new SendTemplate($config));
+        Mail::to($this)->later( now()->addMinutes(10),new Message($config));
     }
 
     /**
